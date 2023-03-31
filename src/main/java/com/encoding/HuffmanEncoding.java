@@ -41,8 +41,8 @@ public class HuffmanEncoding {
         shiftIndex = (int) objs[1];
       }
       bytes.add(part);
-        System.out.println("Last part "+(shiftIndex+1));
-      bytes.add((byte) (shiftIndex + 1));
+        System.out.println("Last part "+(shiftIndex));
+      bytes.add((byte) (shiftIndex));
       return bytes;
     }
 

@@ -6,8 +6,6 @@ import java.util.Map;
 
 public class HuffmanDecompressor {
 
-
-
     public HashMap<String, Character> reverseDico( HashMap<Character, CharEncoding> dico){
         HashMap<String, Character> reverseDico = new HashMap<>();
 
@@ -21,16 +19,20 @@ public class HuffmanDecompressor {
     public String decompress() throws IOException {
         HashMap<String, Character> reverseDico = reverseDico(HuffmanTree.deserializeDico());
         byte[] datas = FileUtil.readBytes("file/compress.bin");
+        int size = datas.length;
+        int indexToStop = datas[size-1];
         String str = "";
         String result = "";
 
-        for (byte data : datas) {
+        for (int j = 0; j < size - 1; j++ ) {
+            byte data = datas[j];
             //get all the bit of the byte
-            for(int i = 7; i >= 0; i-- ){
+            for(int i = 7; i >= 0; i--){
+                if(j == size - 2 && i == indexToStop){break;}
                 byte byt = 1;
                 byt = (byte) (byt << i);
                 byte tmp = (byte) (data & byt);
-                //si tmp != 0 on sait que la valeur sur ce bit est 1 sinon 0
+                //if tmp != 0 it means that the value of the bit on i is 1 otherwise it is 0
                 str = str + (tmp != 0 ? "1" : "0");
                 if(reverseDico.containsKey(str)){
                     result += reverseDico.get(str);
@@ -38,7 +40,6 @@ public class HuffmanDecompressor {
                 }
             }
         }
-
         return result;
     }
 }
