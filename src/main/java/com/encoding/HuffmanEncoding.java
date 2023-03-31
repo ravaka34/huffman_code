@@ -47,7 +47,7 @@ public class HuffmanEncoding {
     }
 
     public void compress(){
-        FileUtil.writeBytes(getCompressedBytes(), "file/output.bin");
+        FileUtil.writeBytes(getCompressedBytes(), "file/compress.bin");
         getTree().serializeDico();
     }
 

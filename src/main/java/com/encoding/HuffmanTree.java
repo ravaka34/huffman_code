@@ -1,6 +1,8 @@
 package com.encoding;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.*;
 
@@ -17,7 +19,12 @@ public class HuffmanTree  {
 
     private static final String LEFT_PATH = "0";
 
+    private static final String DICO_FILEPATH = "file/dico.bin";
 
+
+    public HuffmanTree(){
+
+    }
     public HuffmanTree(HashMap<Character, Integer> leaves, Integer textSize) {
         this.textSize = textSize;
         createTree(leaves);
@@ -69,13 +76,20 @@ public class HuffmanTree  {
     }
 
     public void serializeDico(){
-        try(FileOutputStream fout=new FileOutputStream("file/dico.bin")){
+        try(FileOutputStream fout=new FileOutputStream(DICO_FILEPATH)){
             ObjectOutputStream out=new ObjectOutputStream(fout);
             out.writeObject(this.getCharEncoding());
             out.flush();
         }catch(Exception e){System.out.println(e);}
     }
 
+    public static HashMap<Character, CharEncoding> deserializeDico(){
+        HashMap<Character, CharEncoding> dictionary = null;
+        try( ObjectInputStream in=new ObjectInputStream(new FileInputStream(DICO_FILEPATH))) {
+            dictionary = (HashMap<Character, CharEncoding>) in.readObject();
+        }catch(Exception e){System.out.println(e);}
+        return dictionary;
+    }
 
     public Node getRoot() {
         return root;

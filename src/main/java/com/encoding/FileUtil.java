@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtil {
-    public static void writeBytes(List<Byte> bytes, String fileName){
-        try (FileOutputStream output = new FileOutputStream(fileName)){
+    public static void writeBytes(List<Byte> bytes, String filePath){
+        try (FileOutputStream output = new FileOutputStream(filePath)){
             for(byte byt : bytes){
                 output.write(byt);
             }
@@ -20,8 +20,8 @@ public class FileUtil {
         }
     }
 
-    public static void writeString (String str, String fileName){
-        Path path = Paths.get(fileName);
+    public static void writeString (String str, String filePath){
+        Path path = Paths.get(filePath);
 
         // Try block to check for exceptions
         try {
@@ -37,5 +37,10 @@ public class FileUtil {
             // invalid. directory local path is passed
             System.out.print("Invalid Path");
         }
+    }
+
+    public static byte[] readBytes(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+        return Files.readAllBytes(path);
     }
 }
