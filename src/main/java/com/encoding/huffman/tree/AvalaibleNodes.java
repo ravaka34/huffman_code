@@ -1,4 +1,4 @@
-package com.encoding;
+package com.encoding.huffman.tree;
 
 import java.util.*;
 
@@ -30,7 +30,7 @@ public class AvalaibleNodes {
     }
 
     public void add(Node node){
-        for (int i = 0;i < nodes.size() ; i++) {
+        for (int i = 0; i < nodes.size() ; i++) {
             if(nodes.get(i).getOccurence() >= node.getOccurence()){
                 nodes.add(i, node);
                 return;
@@ -41,9 +41,5 @@ public class AvalaibleNodes {
 
     public List<Node> getNodes() {
         return nodes;
-    }
-
-    public void setNodes(List<Node> nodes) {
-        this.nodes = nodes;
     }
 }

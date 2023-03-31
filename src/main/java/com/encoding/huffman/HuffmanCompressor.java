@@ -1,16 +1,33 @@
-package com.encoding;
+package com.encoding.huffman;
 
+import com.encoding.FileUtil;
+import com.encoding.huffman.tree.CharEncoding;
+import com.encoding.huffman.tree.HuffmanTree;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HuffmanEncoding {
+public class HuffmanCompressor {
 
     private HuffmanTree tree;
     private String text;
     private int textSize;
-    public HuffmanEncoding (String text){
-        this.text = text;
+    private String compressPath;
+    private String dicoPath;
+
+    public HuffmanCompressor(String textPath, String compressPath, String dicoPath) throws IOException {
+        this.compressPath = compressPath;
+        this.dicoPath = dicoPath;
+        this.text = FileUtil.readFile(textPath);
+        this.textSize = text.length();
+    }
+
+    public HuffmanCompressor(String textPath) throws IOException {
+        this.compressPath = "file/compress.bin";
+        this.dicoPath = "file/dico.bin";
+        this.text = FileUtil.readFile(textPath);
         this.textSize = text.length();
     }
 
@@ -47,8 +64,9 @@ public class HuffmanEncoding {
     }
 
     public void compress(){
-        FileUtil.writeBytes(getCompressedBytes(), "file/compress.bin");
-        getTree().serializeDico();
+        System.out.println("Text to compress: "+ text);
+        FileUtil.writeBytes(getCompressedBytes(), compressPath);
+        getTree().serializeDico(dicoPath);
     }
 
 

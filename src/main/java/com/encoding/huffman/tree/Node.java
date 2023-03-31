@@ -1,6 +1,4 @@
-package com.encoding;
-
-import java.io.Serializable;
+package com.encoding.huffman.tree;
 
 public class Node {
     private char character;

@@ -1,4 +1,4 @@
-package com.encoding;
+package com.encoding.huffman.tree;
 
 import java.io.Serializable;
 import java.util.List;

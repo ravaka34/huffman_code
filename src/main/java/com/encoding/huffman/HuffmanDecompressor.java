@@ -1,4 +1,8 @@
-package com.encoding;
+package com.encoding.huffman;
+
+import com.encoding.FileUtil;
+import com.encoding.huffman.tree.CharEncoding;
+import com.encoding.huffman.tree.HuffmanTree;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,7 +10,26 @@ import java.util.Map;
 
 public class HuffmanDecompressor {
 
-    public HashMap<String, Character> reverseDico( HashMap<Character, CharEncoding> dico){
+    private String compressPath;
+
+    private String outputPath;
+
+    private String dicoPath;
+
+
+    public HuffmanDecompressor(String compressPath, String outputPath, String dicoPath) {
+        this.compressPath  = compressPath;
+        this.outputPath = outputPath;
+        this.dicoPath = dicoPath;
+    }
+
+    public HuffmanDecompressor(String compressPath, String dicoPath) {
+        this.compressPath = compressPath;
+        this.outputPath = "file/decompress.txt";
+        this.dicoPath = dicoPath;
+    }
+
+    public HashMap<String, Character> reverseDico(HashMap<Character, CharEncoding> dico){
         HashMap<String, Character> reverseDico = new HashMap<>();
 
         for (Map.Entry<Character, CharEncoding> entry : dico.entrySet()
@@ -16,9 +39,13 @@ public class HuffmanDecompressor {
         return reverseDico;
     }
 
-    public String decompress() throws IOException {
-        HashMap<String, Character> reverseDico = reverseDico(HuffmanTree.deserializeDico());
-        byte[] datas = FileUtil.readBytes("file/compress.bin");
+    public void decompress() throws IOException {
+        FileUtil.writeString(decompressedString(), outputPath);
+    }
+
+    public String decompressedString() throws IOException {
+        HashMap<String, Character> reverseDico = reverseDico(HuffmanTree.deserializeDico(dicoPath));
+        byte[] datas = FileUtil.readBytes(compressPath);
         int size = datas.length;
         int indexToStop = datas[size-1];
         String str = "";
@@ -40,6 +67,7 @@ public class HuffmanDecompressor {
                 }
             }
         }
+        System.out.println(result);
         return result;
     }
 }

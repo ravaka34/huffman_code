@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtil {
@@ -37,6 +36,12 @@ public class FileUtil {
             // invalid. directory local path is passed
             System.out.print("Invalid Path");
         }
+    }
+
+    public static String readFile(String filePath) throws IOException {
+        Path fileName
+                = Path.of(filePath);
+        return Files.readString(fileName);
     }
 
     public static byte[] readBytes(String filePath) throws IOException {

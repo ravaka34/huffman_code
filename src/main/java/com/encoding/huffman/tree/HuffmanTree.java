@@ -1,4 +1,4 @@
-package com.encoding;
+package com.encoding.huffman.tree;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,8 +18,6 @@ public class HuffmanTree  {
     private static final String RIGHT_PATH = "1";
 
     private static final String LEFT_PATH = "0";
-
-    private static final String DICO_FILEPATH = "file/dico.bin";
 
 
     public HuffmanTree(){
@@ -75,32 +73,19 @@ public class HuffmanTree  {
         return this.charEncoding;
     }
 
-    public void serializeDico(){
-        try(FileOutputStream fout=new FileOutputStream(DICO_FILEPATH)){
+    public void serializeDico(String dicoFilePath){
+        try(FileOutputStream fout=new FileOutputStream(dicoFilePath)){
             ObjectOutputStream out=new ObjectOutputStream(fout);
             out.writeObject(this.getCharEncoding());
             out.flush();
         }catch(Exception e){System.out.println(e);}
     }
 
-    public static HashMap<Character, CharEncoding> deserializeDico(){
+    public static HashMap<Character, CharEncoding> deserializeDico(String dicoFilePath){
         HashMap<Character, CharEncoding> dictionary = null;
-        try( ObjectInputStream in=new ObjectInputStream(new FileInputStream(DICO_FILEPATH))) {
+        try( ObjectInputStream in=new ObjectInputStream(new FileInputStream(dicoFilePath))) {
             dictionary = (HashMap<Character, CharEncoding>) in.readObject();
         }catch(Exception e){System.out.println(e);}
         return dictionary;
-    }
-
-    public Node getRoot() {
-        return root;
-    }
-
-    public void setRoot(Node root) {
-        this.root = root;
-    }
-
-    public static void main(String[] args) {
-        int bitTest = 0b1000;
-        System.out.println(Integer.toBinaryString(Integer.reverse(bitTest)));
     }
 }
